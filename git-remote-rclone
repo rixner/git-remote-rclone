@@ -39,6 +39,10 @@ class RCloneRemote(object):
         outstream: Stream to communicate outcomes to Git.
         errstream: Stream for logging.
         """
+        if not url.startswith('rclone://'):
+            raise ValueError('Unsupported URL scheme: {}'.format(url))
+        remote = url[9:]
+
         self.parsed_url = urlparse(url)
         self.remote = remote
         # internal logic relies on workdir to be an absolute path
